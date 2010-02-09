@@ -58,7 +58,7 @@ module ContentHelper
     section = args.pop || category.section
     route_name = :"#{section.class.name.downcase}_category_path"
     text ||= category.title
-    link_to(text, send(route_name, :section_id => section.id, :category_id => category.id))
+    link_to(h(text), send(route_name, :section_id => section.id, :category_id => category.id))
   end
 
   def links_to_content_categories(content, key = nil)
@@ -72,7 +72,7 @@ module ContentHelper
     section = args.pop
     route_name = :"#{section.class.name.downcase}_tag_path"
     text = args.pop || tag.name
-    link_to(text, send(route_name, :section_id => section.id, :tags => tag))
+    link_to(h(text), send(route_name, :section_id => section.id, :tags => tag))
   end
 
   def links_to_content_tags(content, key = nil)

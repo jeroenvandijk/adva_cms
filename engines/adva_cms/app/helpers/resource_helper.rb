@@ -27,7 +27,7 @@ module ResourceHelper
     resource = [resource, type] if [:index, :new].include?(action)
     url = options.delete(:url) || resource_url(action, resource, url_options)
 
-    link_to(text, url, options)
+    link_to(h(text), url, options)
   end
 
   [:index, :new, :show, :edit, :delete].each do |action|
@@ -63,7 +63,8 @@ module ResourceHelper
     end
 
     def resource_url_namespace(options)
-      options.key?(:namespace) ? options.delete(:namespace) : current_controller_namespace
+      # FIXME - look at this again, alright?
+      options.key?(:namespace) ? options.delete(:namespace) : (current_controller_namespace.present? && current_controller_namespace.to_sym == :admin ? current_controller_namespace : nil)
     end
 
     def current_controller_namespace

@@ -1,7 +1,9 @@
 class BaseCell < Cell::Base
+  helper :content, :resource
+  
   protected
     def symbolize_options!
-      @opts.symbolize_keys!
+      @opts.deep_symbolize_keys!
     end
 
     def set_site
@@ -9,8 +11,8 @@ class BaseCell < Cell::Base
     end
 
     def set_section
-      if section = @opts[:section]
-        @section = @site.sections.find(:first, :conditions => ["id = ? OR permalink = ?", section, section])
+      @section = if section = @opts[:section]
+        @site.sections.find(:first, :conditions => ["id = ? OR permalink = ?", section, section])
       end
       @section ||= controller.section
       @section ||= @site.sections.root
