@@ -1,3 +1,14 @@
+if(!Array.indexOf) { 
+  // Define indexOf for Browsers that do not support it
+  Array.prototype.indexOf = function(e) {
+	  for( var i=0; i<this.length; i++ ){
+  		if( this[i] == e ) return i;
+  	}
+  	return -1;
+  };
+}
+
+
 TableTree = {
 	tableDnDOptions: {
 		onDragClass: 'drag',
@@ -210,12 +221,12 @@ TableTree.Node.prototype = jQuery.extend(new TableTree.Base(), {
 		return this.parent.element ? this.to_int(this.parent.element.id) : 'null';
 	},
 	left_id: function() {
-		left = this.left()
+    var left = this.left()
 		return left ? this.to_int(left.element.id) : 'null';
 	},
 	left: function() {
-		siblings = this.siblings().get();
-		ix = siblings.indexOf(this);
+		var siblings = this.siblings().get();
+    var ix = siblings.indexOf(this);
 		if(ix > 0) return siblings[ix - 1];
 	},
 	to_int: function(str) { 
